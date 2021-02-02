@@ -20,7 +20,7 @@ class Ingredient(models.Model):
     
 class Pizza(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, blank=True)
 
 
 class Order(models.Model):

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <title>Pizzeria UCAB</title>
+    <title>Pizzería UCAB</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid px-5">
-          <a class="navbar-brand" href="#">Pizzeria UCAB</a>
+          <a class="navbar-brand" href="#">Pizzería UCAB</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -22,27 +22,24 @@
         </div>
       </nav>
     <div style="display: flex; justify-content: center; flex-direction: column;">
-        <h1 class="mx-auto mb-3 mt-5">Bienvenido a Pizzeria UCAB</h1>
+        <h1 class="mx-auto mb-3 mt-5">Bienvenido a Pizzería UCAB</h1>
         <div style="display: flex; justify-content: center; flex-wrap: wrap;">
-            <div class="p-5 m-2" style="border: lightgray 1px solid; width: 30%; border-radius: 10px;">
-                <form  style="display: flex; justify-content: center; flex-direction: column;">
-                    <select class="form-select mb-2" aria-label="Default select example">
-                        {% for size in sizes %}
-                            <li><a class="dropdown-item" href="#"><option selected>{{ size.name }} - ${{ size.price }}</option></a></li>
+                <div class="p-5 m-2" style="border: lightgray 1px solid; width: 30%; border-radius: 10px;">
+                    <form method="post" style="display: flex; justify-content: center; flex-direction: column;">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn btn-primary mt-3" value="Agregar a la orden"></input>
+                    </form>
+                </div> 
+                <div class="p-5 m-2" style="border: lightgray 1px solid; width: 30%; border-radius: 10px;">
+                    <h3>Mi Orden</h3>
+                    <ul>
+                        {% for pizza in pizzas %}
+                            <li>{{ pizza.id }}</li>
                         {% endfor %}
-                    </select>
-
-                    {% for ing in ingredients %}
-                        <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                {{ ing.name }} - ${{ ing.price }}
-                                </label>
-                        </div>
-                    {% endfor %}
-                    <button type="submit" class="btn btn-primary mt-3">Agregar otra pizza</button>
-                </form>
-            </div> 
+                    </ul>
+                    
+                </div>
         </div>
         <button type="submit" class="btn btn-success mt-3" style="width: 20%; margin: 0 auto">Finalizar orden</button>
     </div>
