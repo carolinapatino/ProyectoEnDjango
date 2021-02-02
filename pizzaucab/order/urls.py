@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:order_id>/', views.detail, name='detail'),
     # path('nuevo', views.addPizza, name='addPizza'),
     url(r'nuevo', views.addPizza, name='addPizza'),
+    path('deletePizza/<int:id>', views.deletePizza, name='deletePizza'),
 ]

@@ -33,11 +33,16 @@
                 </div> 
                 <div class="p-5 m-2" style="border: lightgray 1px solid; width: 30%; border-radius: 10px;">
                     <h3>Mi Orden</h3>
-                    <ul>
+                    <table>
                         {% for pizza in pizzas %}
-                            <li>{{ pizza.size }} ({{ pizza.ingredient }})</li>
+                            <tr>
+                                <td>{{ pizza.size }}</td>
+                                <td>({{ pizza.ingredient }})</td>
+                                 <td><a type="button" class="btn btn-danger" 
+                                    href="/order/deletePizza/{{ pizza.id }}">Eliminar</a></td>
+                            </tr>
                         {% endfor %}
-                    </ul>
+                    </table>
                     
                 </div>
         </div>

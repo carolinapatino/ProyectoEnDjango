@@ -57,3 +57,37 @@ def addPizza(request):
     # Si llegamos al final renderizamos el formulario
     return render(request, "order/index.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas })
 
+def addOrder(request):
+    # Creamos un formulario vacío
+    ingredients = Ingredient.objects.all()
+    sizes = Size.objects.all()
+    pizzas = Pizza.objects.all()
+    form = OrderForm()
+
+    # Comprobamos si se ha enviado el formulario
+    if request.method == "POST":
+        # Añadimos los datos recibidos al formulario
+        form = PizzaForm(request.POST)
+        # Si el formulario es válido...
+
+        if form.is_valid():
+            # Guardamos el formulario pero sin confirmarlo,
+            # así conseguiremos una instancia para manejarla
+            # instancia = form.save(commit=False)
+            # Podemos guardarla cuando queramos
+            form.save()
+            # Después de guardar redireccionamos a la lista
+            return redirect('/order/nuevo')
+    else:
+        form = PizzaForm()
+
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "order/index.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas })
+
+def deletePizza(request, id):
+    pizza = Pizza.objects.get(id=id)
+    try:
+        pizza.delete()
+    except:
+        pass
+    return redirect('order/nuevo')
