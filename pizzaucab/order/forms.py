@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Pizza
+from .models import Pizza, Ingredient
 from django import forms
 
 
@@ -18,5 +18,5 @@ class PizzaForm(forms.ModelForm):
 
         widgets = {
             'size': forms.Select(attrs={'class':'form-control'}),
-            'ingredient': forms.CheckboxSelectMultiple()
+            'ingredient': forms.Select(attrs={'class':'form-control'})
         }

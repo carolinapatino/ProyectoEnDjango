@@ -16,11 +16,25 @@ def index(request):
     }
     return render(request,'order/index.html', context)
 
+def orderDetail(request):
+    ingredients = Ingredient.objects.all()
+    sizes = Size.objects.all()
+    pizzas = Pizza.objects.all()
+    context = {
+        'ingredients': ingredients,
+        'sizes': sizes,      
+        'pizzas': pizzas 
+    }
+    return render(request,'order/orderDetail.html', context)
+
 def detail(request, order_id):
     return HttpResponse("Esta buscando la pizza %s" % order_id)
 
 def addPizza(request):
     # Creamos un formulario vacío
+    ingredients = Ingredient.objects.all()
+    sizes = Size.objects.all()
+    pizzas = Pizza.objects.all()
     form = PizzaForm()
 
     # Comprobamos si se ha enviado el formulario
@@ -36,10 +50,10 @@ def addPizza(request):
             # Podemos guardarla cuando queramos
             form.save()
             # Después de guardar redireccionamos a la lista
-            return redirect('order:index')
+            return redirect('/order/nuevo')
     else:
         form = PizzaForm()
 
     # Si llegamos al final renderizamos el formulario
-    return render(request, "order/index.html", {'form': form})
+    return render(request, "order/index.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas })
 
