@@ -13,22 +13,24 @@ class Size(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=50)
-    price = models.IntegerField()
+    price = models.FloatField()
 
     def __str__(self):
         return self.name
-    
+
+class Order(models.Model):
+    name = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50)
+    ci = models.IntegerField()
+    city = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name + ' ' + self.lastname
+
 class Pizza(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, null=True)
-
-
-class Order(models.Model):
-    date = models.DateField()
-    pizza = models.ForeignKey(Pizza, on_delete = models.CASCADE)
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
 
 

@@ -2,19 +2,35 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import Order, Size, Pizza, Ingredient
-from .forms import PizzaForm
+from .forms import PizzaForm, OrderForm
 
 # Create your views here.
 def index(request):
     ingredients = Ingredient.objects.all()
     sizes = Size.objects.all()
     pizzas = Pizza.objects.all()
-    context = {
-        'ingredients': ingredients,
-        'sizes': sizes,      
-        'pizzas': pizzas 
-    }
-    return render(request,'order/index.html', context)
+    form = OrderForm()
+
+    # Comprobamos si se ha enviado el formulario
+    if request.method == "POST":
+        # Añadimos los datos recibidos al formulario
+        form = OrderForm(request.POST)
+        # Si el formulario es válido...
+
+        if form.is_valid():
+            # Guardamos el formulario pero sin confirmarlo,
+            # así conseguiremos una instancia para manejarla
+            # instancia = form.save(commit=False)
+            # Podemos guardarla cuando queramos
+            form.save()
+            # Después de guardar redireccionamos a la lista
+            return redirect('/order/addPizza')
+    else:
+        form = OrderForm()
+
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "order/home.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas })
+
 
 def orderDetail(request):
     ingredients = Ingredient.objects.all()
@@ -50,7 +66,7 @@ def addPizza(request):
             # Podemos guardarla cuando queramos
             form.save()
             # Después de guardar redireccionamos a la lista
-            return redirect('/order/nuevo')
+            return redirect('/order/addPizza')
     else:
         form = PizzaForm()
 
@@ -77,7 +93,7 @@ def addOrder(request):
             # Podemos guardarla cuando queramos
             form.save()
             # Después de guardar redireccionamos a la lista
-            return redirect('/order/nuevo')
+            return redirect('/order')
     else:
         form = PizzaForm()
 
@@ -90,4 +106,5 @@ def deletePizza(request, id):
         pizza.delete()
     except:
         pass
-    return redirect('order/nuevo')
+    return redirect('order/addPizza')
+
