@@ -56,7 +56,8 @@ def addPizza(request):
     # Comprobamos si se ha enviado el formulario
     if request.method == "POST":
         # Añadimos los datos recibidos al formulario
-        form = PizzaForm(request.POST)
+        
+        form = PizzaForm(request.POST, initial={'order': "Antonio"})
         # Si el formulario es válido...
 
         if form.is_valid():
@@ -64,6 +65,7 @@ def addPizza(request):
             # así conseguiremos una instancia para manejarla
             # instancia = form.save(commit=False)
             # Podemos guardarla cuando queramos
+           
             form.save()
             # Después de guardar redireccionamos a la lista
             return redirect('/order/addPizza')
@@ -91,6 +93,7 @@ def addOrder(request):
             # así conseguiremos una instancia para manejarla
             # instancia = form.save(commit=False)
             # Podemos guardarla cuando queramos
+           
             form.save()
             # Después de guardar redireccionamos a la lista
             return redirect('/order')
@@ -98,6 +101,7 @@ def addOrder(request):
         form = PizzaForm()
 
     # Si llegamos al final renderizamos el formulario
+     
     return render(request, "order/index.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas })
 
 def deletePizza(request, id):
@@ -108,3 +112,21 @@ def deletePizza(request, id):
         pass
     return redirect('order/addPizza')
 
+def Reports (request):
+    return render(request, "order/reports.html")
+
+def orders (request):
+    orders = Pizza.objects.all()
+    return render(request, "order/orders.html", {'orders': orders, 'title': 'Ventas Realizadas'})
+
+def ordersBySize (request, size):
+    orders = Pizza.objects.filter(size__name=size)
+    return render(request, "order/orders.html", {'orders': orders, 'title': 'Ventas Realizadas por tamaño'})
+
+def ordersByIngredient (request, ingredient):
+    orders = Pizza.objects.filter(ingredient__name=ingredient)
+    return render(request, "order/orders.html", {'orders': orders, 'title': 'Ventas Realizadas por ingrediente'})
+
+def ordersByClient (request, client):
+    orders = Pizza.objects.filter(order__name=client)
+    return render(request, "order/orders.html", {'orders': orders, 'title': 'Ventas Realizadas por cliente'})
