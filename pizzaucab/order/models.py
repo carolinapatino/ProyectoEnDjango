@@ -29,8 +29,11 @@ class Order(models.Model):
 
 class Pizza(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, null=True)
+    ingredient = models.ManyToManyField(Ingredient, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return self.rowid
 
 
 

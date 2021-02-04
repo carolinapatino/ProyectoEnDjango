@@ -44,6 +44,6 @@ class PizzaForm(forms.ModelForm):
 
         widgets = {
             'size': forms.Select(attrs={'class':'form-control'}),
-            'ingredient': forms.Select(attrs={'class':'form-control'}),
+            'ingredient': forms.CheckboxSelectMultiple(),
             'order': forms.Select(attrs={'class':'form-control'})
         }

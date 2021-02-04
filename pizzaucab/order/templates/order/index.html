@@ -28,6 +28,7 @@
                     <form method="post" style="display: flex; justify-content: center; flex-direction: column;">
                         {% csrf_token %}
                         {{ form.as_p }}
+                        <!-- <input type="hidden" name="order_id" value="{{order_id}}" id="order_id"/> -->
                         <input type="submit" class="btn btn-primary mt-3" value="Agregar a la orden"></input>
                     </form>
                 </div> 
@@ -35,9 +36,16 @@
                     <h3>Mi Orden</h3>
                     <table>
                         {% for pizza in pizzas %}
-                            <tr>
+                            <tr style="border-top: 1px solid lightgray; border-bottom: 1px solid lightgray;">
                                 <td>{{ pizza.size }}</td>
-                                <td>({{ pizza.ingredient }})</td>
+                                <td>
+                                    <ul>
+                                        {% for i in pizza.ingredient.all %}
+                                            <li>{{ i.name }}</li>
+                                        
+                                        {% endfor %}
+                                    </ul>
+                                </td>
                                  <td><a type="button" class="btn btn-danger" 
                                     href="/order/deletePizza/{{ pizza.id }}">Eliminar</a></td>
                             </tr>

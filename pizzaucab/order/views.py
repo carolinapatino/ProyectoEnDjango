@@ -51,6 +51,7 @@ def addPizza(request):
     ingredients = Ingredient.objects.all()
     sizes = Size.objects.all()
     pizzas = Pizza.objects.all()
+    # order_id = order_id
     form = PizzaForm()
 
     # Comprobamos si se ha enviado el formulario
@@ -71,7 +72,7 @@ def addPizza(request):
         form = PizzaForm()
 
     # Si llegamos al final renderizamos el formulario
-    return render(request, "order/index.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas })
+    return render(request, "order/index.html", {'form': form, 'ingredients': ingredients, 'sizes': sizes, 'pizzas': pizzas})
 
 def addOrder(request):
     # Creamos un formulario vacío
