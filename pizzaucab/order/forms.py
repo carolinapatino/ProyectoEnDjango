@@ -28,23 +28,35 @@ class OrderForm(forms.ModelForm):
 
 
 class PizzaForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PizzaForm, self).__init__(*args, **kwargs)
+        self.fields['order'].initial = Order.objects.latest('id')
+        self.fields['total'].initial = 0
+
     class Meta:
         model = Pizza
         fields = [
+            'order',
             'size',
             'ingredient',
-            'order'
+            'total'
         ]
 
         labels = {
+            'order': 'Orden Número:',
             'size': 'Tamaño',
             'ingredient': 'Ingredientes',
-            'order': 'Orden'
+            'total':'Su total'
         }
 
         widgets = {
+            'order': forms.TextInput(attrs={'class':'form-control'}),
             'size': forms.Select(attrs={'class':'form-control'}),
-            'ingredient': forms.CheckboxSelectMultiple(),
-            'order': forms.Select(attrs={'class':'form-control'})
+            'ingredient': forms.CheckboxSelectMultiple() ,
+            'total': forms.TextInput(attrs={'class':'form-control'})
         }
+
+    def save (self, *args, **kwargs):
+        super().save(*args, **kwargs)
 

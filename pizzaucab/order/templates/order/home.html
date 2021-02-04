@@ -23,8 +23,8 @@
       </nav>
     <div style="display: flex; justify-content: center; flex-direction: column;">
         <h1 class="mx-auto mb-3 mt-5">Bienvenido a Pizzería UCAB</h1>
-        <div class="p-5 m-2" style="border: lightgray 1px solid; width: 30%; border-radius: 10px;">
-          <form method="post" style="display: flex; justify-content: center; flex-direction: column; margin: 0 auto">
+        <div class="p-5 m-2" style="border: lightgray 1px solid; width: 30%; border-radius: 10px; align-self: center;">
+          <form method="post" style="display: flex; justify-content: center; flex-direction: column; margin: 0 auto;">
               {% csrf_token %}
               {{ form.as_p }}
               <input type="submit" class="btn btn-primary mt-3" value="Nueva orden"></input>

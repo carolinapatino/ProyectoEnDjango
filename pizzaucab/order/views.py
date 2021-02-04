@@ -35,7 +35,8 @@ def index(request):
 def orderDetail(request):
     ingredients = Ingredient.objects.all()
     sizes = Size.objects.all()
-    pizzas = Pizza.objects.all()
+    order = Order.objects.latest('id')
+    pizzas = Pizza.objects.filter(order = order)
     context = {
         'ingredients': ingredients,
         'sizes': sizes,      
@@ -50,15 +51,16 @@ def addPizza(request):
     # Creamos un formulario vacío
     ingredients = Ingredient.objects.all()
     sizes = Size.objects.all()
-    pizzas = Pizza.objects.all()
-    # order_id = order_id
-    form = PizzaForm()
-
+    order = Order.objects.latest('id')
+    pizzas = Pizza.objects.filter(order = order)
+  
+    form = PizzaForm(instance = order)
+    
     # Comprobamos si se ha enviado el formulario
     if request.method == "POST":
         # Añadimos los datos recibidos al formulario
         
-        form = PizzaForm(request.POST, initial={'order': "Antonio"})
+        form = PizzaForm(request.POST)
         # Si el formulario es válido...
 
         if form.is_valid():
@@ -66,7 +68,7 @@ def addPizza(request):
             # así conseguiremos una instancia para manejarla
             # instancia = form.save(commit=False)
             # Podemos guardarla cuando queramos
-           
+            
             form.save()
             # Después de guardar redireccionamos a la lista
             return redirect('/order/addPizza')
