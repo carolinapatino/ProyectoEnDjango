@@ -11,4 +11,9 @@ urlpatterns = [
     url(r'addPizza', views.addPizza, name='addPizza'),
     # path('addPizza/<int:order_id>', views.addPizza, name='addPizza'),
     path('deletePizza/<int:id>', views.deletePizza, name='deletePizza'),
+    url(r'Reports', views.Reports, name='reports'),
+    url(r'OrdersReport', views.orders, name='orders'),
+    path('OrdersBySize/<size>', views.ordersBySize, name='ordersBySize'),
+    path('OrdersByIngredient/<ingredient>', views.ordersByIngredient, name='ordersByIngredient'),
+    path('OrdersByClient/<client>', views.ordersByClient, name='ordersByClient'),
 ]

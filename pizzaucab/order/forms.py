@@ -47,3 +47,4 @@ class PizzaForm(forms.ModelForm):
             'ingredient': forms.CheckboxSelectMultiple(),
             'order': forms.Select(attrs={'class':'form-control'})
         }
+
