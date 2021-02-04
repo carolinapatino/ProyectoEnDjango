@@ -32,6 +32,9 @@ class Pizza(models.Model):
     ingredient = models.ManyToManyField(Ingredient, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
+    # def __str__(self):
+    #     return self.rowid
+
 
 
 
